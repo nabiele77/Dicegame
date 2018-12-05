@@ -1,7 +1,7 @@
 let playerOne = "allies";
-let playerOneAttrition = 500;
+let playerOneAttrition = 300;
 let playerTwo = "axis";
-let playerTwoAttrition = 500;
+let playerTwoAttrition = 300;
 let rifleDie = 4;
 let rifleAttackCount = 15;
 let machineGunDie = 8;
@@ -17,23 +17,26 @@ let bombingRunAttackCount = 1
 let currentDie;
 let currentAttackCount;
 
-runDiceGame();
+
 function runDiceGame(){
   //setup
-
-
   //gameplay loop
   while (playerOneAttrition > 0 && playerTwoAttrition > 0){
     declareDie();
     playerTwoAttrition -= calculateDamage();
+    if (playerTwoAttrition > 0){
+      declareDie();
+      playerOneAttrition -= calculateDamage();
+    }
+  }
 
-    declareDie();
-    playerOneAttrition -= calculateDamage();
+  if (playerOneAttrition > 0){
+    console.log ("Allies win");
+  }else if(playerTwoAttrition > 0){
+    console.log ("Axis win");
   }
   console.log(playerOneAttrition);
   console.log(playerTwoAttrition);
-  //endgame cleanup
-
 }
 
 function declareDie(){
@@ -80,4 +83,7 @@ function calculateDamage(){
 
 function rollDie(dieSides){
    return Math.floor(Math.random() * dieSides + 1);
+
+
 }
+runDiceGame();
